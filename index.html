@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Приглашение для Юли</title>
 
+    <!-- ===== ПРЕДЗАГРУЗКА GIF ===== -->
+    <link rel="preload" as="image" href="1.gif">
+    <link rel="preload" as="image" href="2.gif">
+    <link rel="preload" as="image" href="3.gif">
+    
     <!-- ===== OG-ТЕГИ ДЛЯ СОЦСЕТЕЙ ===== -->
     <meta property="og:title" content="Юля, привет! 🌸" />
     <meta property="og:description" content="Смотри, что я сделал (это не скам-ссылка) 🙃" />
@@ -31,6 +36,47 @@
             position: relative;
         }
 
+        /* ===== ПРЕЛОАДЕР ===== */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, #fce8e6 0%, #f8e0d8 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        .preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        .preloader-content {
+            text-align: center;
+        }
+        .preloader-heart {
+            font-size: 60px;
+            animation: heartbeat 1s infinite ease-in-out;
+            margin-bottom: 15px;
+        }
+        .preloader-text {
+            font-size: 16px;
+            color: #7a6e64;
+            font-weight: 500;
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+        
         .floating-emojis {
             position: fixed;
             top: 0;
@@ -322,6 +368,14 @@
 </head>
 <body>
 
+<!-- ===== ПРЕЛОАДЕР ===== -->
+<div class="preloader" id="preloader">
+    <div class="preloader-content">
+        <div class="preloader-heart">🌸</div>
+        <div class="preloader-text">Магия...</div>
+    </div>
+</div>
+    
 <div class="floating-emojis">
     <span>☀️</span><span>🌸</span><span>🌿</span><span>✨</span><span>🦙</span>
     <span>🍃</span><span>🌺</span><span>🌻</span><span>🦋</span><span>🌈</span>
@@ -906,6 +960,15 @@
     }
 
     window.onload = function() {
+        // Скрываем прелоадер после полной загрузки сайта
+        const preloader = document.getElementById('preloader');
+        if (preloader) {
+            // Небольшая задержка для красоты (300мс)
+            setTimeout(() => {
+                preloader.classList.add('hidden');
+            }, 300);
+        }
+        
         showScreen('screen0');
         checkAdmin();
         updateConfirmBtn();
