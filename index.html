@@ -191,7 +191,7 @@
             pointer-events: none;
             z-index: 99999;
             border-radius: 50%;
-            animation: fireworkFly 1.8s ease-out forwards;
+            animation: fireworkFly 3s ease-out forwards;
         }
 
         @keyframes fireworkFly {
@@ -944,7 +944,7 @@
         // Задержка перед alert, чтобы фейерверк успел запуститься
         setTimeout(() => {
             alert('🎉 Готово! Твой выбор сохранён. Я тебе напишу! 😊');
-        }, 1200);
+        }, 3000);
         
         const finishBtn = document.querySelector('.btn-success');
         finishBtn.textContent = '✅ Уже завершено';
@@ -970,8 +970,8 @@
         // Смайлики для разнообразия
         const emojis = ['✨', '⭐', '🌟', '💫', '🎇', '🎆', '💥', '✨'];
         
-        // Создаём 40 частиц
-        for (let i = 0; i < 40; i++) {
+        // Создаём 60 частиц
+        for (let i = 0; i < 60; i++) {
             const particle = document.createElement('div');
             particle.className = 'firework-particle';
             
@@ -983,7 +983,7 @@
             
             // Случайный угол и расстояние
             const angle = Math.random() * Math.PI * 2;
-            const distance = 80 + Math.random() * 250;
+            const distance = 80 + Math.random() * 500;
             const tx = Math.cos(angle) * distance;
             const ty = Math.sin(angle) * distance + 100; // +100 для гравитации (падают вниз)
             
