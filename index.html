@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Приглашение для Юли</title>
+
+    <!-- ===== OG-ТЕГИ ДЛЯ СОЦСЕТЕЙ ===== -->
+    <meta property="og:title" content="Юля, привет! 🌸" />
+    <meta property="og:description" content="Осталось только выбрать, куда я тебя украду 🙃" />
+    <meta property="og:image" content="https://твой-домен.ru/1.jpg" />
+    <meta property="og:image:width" content="460" />
+    <meta property="og:image:height" content="461" />
+    <meta property="og:url" content="https://твой-домен.ru/" />
+    <meta property="og:type" content="website" />
+
+    <style>
+        /* ===== ВСЕ СТИЛИ ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { min-height: 100vh; overflow-x: hidden; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(145deg, #fce8e6 0%, #f8e0d8 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            position: relative;
+        }
+
+        .floating-emojis {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .floating-emojis span {
+            position: absolute;
+            font-size: 30px;
+            opacity: 0.30;
+            animation: float 20s infinite ease-in-out;
+            text-shadow: 0 2px 10px rgba(255, 255, 255, 0.2);
+        }
+        .floating-emojis span:nth-child(1) { top: 5%; left: 10%; animation-delay: 0s; font-size: 38px; }
+        .floating-emojis span:nth-child(2) { top: 8%; left: 45%; animation-delay: 2.5s; font-size: 28px; }
+        .floating-emojis span:nth-child(3) { top: 12%; right: 8%; animation-delay: 4.5s; font-size: 34px; }
+        .floating-emojis span:nth-child(4) { top: 25%; left: 5%; animation-delay: 1.5s; font-size: 32px; }
+        .floating-emojis span:nth-child(5) { top: 28%; left: 50%; animation-delay: 3.5s; font-size: 24px; }
+        .floating-emojis span:nth-child(6) { top: 32%; right: 5%; animation-delay: 5.5s; font-size: 30px; }
+        .floating-emojis span:nth-child(7) { top: 48%; left: 8%; animation-delay: 2s; font-size: 36px; }
+        .floating-emojis span:nth-child(8) { top: 50%; left: 42%; animation-delay: 4s; font-size: 26px; }
+        .floating-emojis span:nth-child(9) { top: 52%; right: 8%; animation-delay: 6s; font-size: 32px; }
+        .floating-emojis span:nth-child(10) { top: 68%; left: 5%; animation-delay: 1s; font-size: 34px; }
+        .floating-emojis span:nth-child(11) { top: 70%; left: 48%; animation-delay: 3s; font-size: 28px; }
+        .floating-emojis span:nth-child(12) { top: 72%; right: 5%; animation-delay: 5s; font-size: 30px; }
+        .floating-emojis span:nth-child(13) { top: 88%; left: 12%; animation-delay: 2.5s; font-size: 32px; }
+        .floating-emojis span:nth-child(14) { top: 90%; left: 50%; animation-delay: 4.5s; font-size: 26px; }
+        .floating-emojis span:nth-child(15) { top: 85%; right: 10%; animation-delay: 1.5s; font-size: 28px; }
+        .floating-emojis span:nth-child(16) { top: 15%; left: 25%; animation-delay: 3.8s; font-size: 22px; }
+        .floating-emojis span:nth-child(17) { top: 40%; left: 30%; animation-delay: 5.2s; font-size: 20px; }
+        .floating-emojis span:nth-child(18) { top: 60%; left: 35%; animation-delay: 2.2s; font-size: 24px; }
+        .floating-emojis span:nth-child(19) { top: 80%; left: 30%; animation-delay: 4.8s; font-size: 22px; }
+        .floating-emojis span:nth-child(20) { top: 45%; left: 60%; animation-delay: 1.8s; font-size: 20px; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
+            20% { transform: translateY(-28px) rotate(5deg) scale(1.08); }
+            40% { transform: translateY(12px) rotate(-3deg) scale(0.95); }
+            60% { transform: translateY(-18px) rotate(4deg) scale(1.05); }
+            80% { transform: translateY(22px) rotate(-2deg) scale(0.98); }
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.72);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            max-width: 400px;
+            width: 100%;
+            border-radius: 36px;
+            padding: 35px 25px 30px;
+            box-shadow: 0 20px 60px rgba(180, 120, 100, 0.20), 0 0 0 1px rgba(255, 255, 255, 0.5);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            min-height: 460px;
+        }
+
+        .screen { display: none; flex-direction: column; align-items: center; gap: 18px; width: 100%; }
+        .screen.active { display: flex; }
+
+        h1 { font-size: 26px; font-weight: 600; color: #2d2a24; letter-spacing: -0.3px; line-height: 1.3; }
+        h2 { font-size: 32px; font-weight: 700; margin: 10px 0 0; color: #2d2a24; }
+        .sub { font-size: 17px; color: #7a6e64; margin-top: -5px; font-weight: 400; }
+        .emoji-big { font-size: 52px; margin-bottom: 5px; }
+        .hashtag { font-size: 30px; font-weight: 700; color: #dbb8ae; letter-spacing: 1px; }
+
+        .btn-group { display: flex; gap: 15px; width: 100%; justify-content: center; flex-wrap: wrap; }
+        .btn {
+            border: none;
+            border-radius: 60px;
+            padding: 15px 45px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            background: #f2edeb;
+            color: #2d2a24;
+            flex: 1;
+            min-width: 120px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+            -webkit-tap-highlight-color: transparent;
+        }
+        .btn:active { transform: scale(0.95); }
+        .btn-primary { background: #dbb8ae; color: white; }
+        .btn-primary:active { background: #c9a89e; }
+        .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+        .btn-primary:disabled:active { transform: none; }
+        .btn-outline { background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); border: 1.5px solid #dccfc8; }
+        .btn-large { padding: 18px 50px; font-size: 20px; min-width: 160px; }
+        .btn-success { background: #a8c4b8; color: white; }
+        .btn-success:active { background: #92b3a6; }
+
+        .date-picker-card {
+            width: 100%;
+            padding: 20px 24px;
+            background: rgba(248, 243, 240, 0.8);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border-radius: 24px;
+            border: 2px dashed #dccfc8;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
+            position: relative;
+        }
+        .date-picker-card:active { transform: scale(0.97); }
+        .date-picker-card.has-date { border-style: solid; border-color: #dbb8ae; background: rgba(245, 237, 234, 0.8); }
+        .date-picker-card .placeholder { font-size: 18px; color: #b0a098; font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 12px; }
+        .date-picker-card .placeholder .icon { font-size: 28px; }
+        .date-picker-card .selected-date { display: none; font-size: 18px; font-weight: 600; color: #2d2a24; gap: 10px; align-items: center; justify-content: center; flex-wrap: wrap; }
+        .date-picker-card.has-date .placeholder { display: none; }
+        .date-picker-card.has-date .selected-date { display: flex; }
+        .date-picker-card .selected-date .emoji { font-size: 24px; }
+        .date-picker-card .selected-date .date-text { background: rgba(255, 255, 255, 0.7); padding: 6px 16px; border-radius: 30px; font-size: 15px; color: #5a4f48; }
+
+        #datePicker {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            cursor: pointer;
+            -webkit-appearance: none;
+            appearance: none;
+            background: transparent;
+            border: none;
+            outline: none;
+        }
+        #datePicker::-webkit-calendar-picker-indicator {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .btn-confirm-date {
+            width: 100%;
+            padding: 16px;
+            border-radius: 60px;
+            border: none;
+            font-size: 18px;
+            font-weight: 600;
+            background: #e8ddd6;
+            color: #b0a098;
+            cursor: default;
+            transition: all 0.2s ease;
+            margin-top: 4px;
+        }
+        .btn-confirm-date.active { background: #dbb8ae; color: white; cursor: pointer; box-shadow: 0 4px 16px rgba(219, 184, 174, 0.35); }
+        .btn-confirm-date.active:active { transform: scale(0.95); }
+
+        .carousel-wrapper { width: 100%; overflow: hidden; border-radius: 24px; position: relative; margin: 8px 0; }
+        .carousel-track { display: flex; transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94); touch-action: pan-y; will-change: transform; }
+        .carousel-slide { min-width: 100%; padding: 0 4px; }
+        .place-card {
+            background: rgba(248, 243, 240, 0.8);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border-radius: 24px;
+            padding: 30px 20px 25px;
+            text-align: center;
+            min-height: 210px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            border: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+        .place-card.selected { border-color: #dbb8ae; background: rgba(245, 237, 234, 0.8); }
+        .place-card .icon { font-size: 44px; margin-bottom: 4px; }
+        .place-card .name { font-size: 20px; font-weight: 600; color: #2d2a24; }
+        .place-card .desc { font-size: 15px; color: #7a6e64; font-weight: 400; }
+        .place-card .small-note { font-size: 13px; color: #b0a098; font-weight: 400; margin-top: 4px; line-height: 1.3; }
+
+        .carousel-dots { display: flex; gap: 8px; justify-content: center; margin: 8px 0 12px; }
+        .carousel-dots .dot { width: 8px; height: 8px; border-radius: 50%; background: #dccfc8; transition: all 0.2s ease; }
+        .carousel-dots .dot.active { background: #dbb8ae; width: 20px; border-radius: 4px; }
+
+        .btn-select-place {
+            width: 100%;
+            padding: 16px;
+            border-radius: 60px;
+            border: none;
+            font-size: 18px;
+            font-weight: 600;
+            background: #e8ddd6;
+            color: #b0a098;
+            cursor: default;
+            transition: all 0.2s ease;
+            margin-top: 4px;
+        }
+        .btn-select-place.active { background: #dbb8ae; color: white; cursor: pointer; box-shadow: 0 4px 16px rgba(219, 184, 174, 0.35); }
+        .btn-select-place.active:active { transform: scale(0.95); }
+
+        .hidden-btn { margin-top: 8px; font-size: 12px; color: #b0a098; background: none; border: none; text-decoration: underline; cursor: pointer; opacity: 0.6; padding: 6px 12px; }
+        .hidden-btn.danger { color: #c0392b; opacity: 0.7; }
+        .divider { width: 100%; height: 1px; background: linear-gradient(to right, transparent, #dccfc8, transparent); margin: 8px 0; }
+
+        .text-left {
+            text-align: left;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #3d3530;
+            padding: 0 4px;
+        }
+        .text-justify {
+            text-align: justify;
+            width: 100%;
+        }
+
+        .final-info {
+            width: 100%;
+            text-align: left;
+            font-size: 16px;
+            line-height: 1.9;
+            color: #3d3530;
+            padding: 10px 4px;
+        }
+        .final-info .label {
+            font-weight: 600;
+            color: #2d2a24;
+        }
+
+        @media (max-width: 420px) {
+            .card { padding: 25px 18px 25px; border-radius: 28px; background: rgba(255, 255, 255, 0.78); }
+            h1 { font-size: 22px; }
+            h2 { font-size: 28px; }
+            .hashtag { font-size: 26px; }
+            .place-card { padding: 22px 16px 20px; min-height: 180px; }
+            .place-card .icon { font-size: 36px; }
+            .place-card .name { font-size: 18px; }
+            .btn { padding: 14px 30px; font-size: 16px; min-width: 100px; }
+            .btn-large { padding: 16px 36px; font-size: 18px; min-width: 140px; }
+            .date-picker-card { padding: 16px 18px; }
+            .date-picker-card .placeholder { font-size: 16px; }
+            .date-picker-card .selected-date { font-size: 16px; }
+            .floating-emojis span { font-size: 22px !important; opacity: 0.25; }
+            .text-left { font-size: 15px; }
+            .final-info { font-size: 15px; }
+        }
+        @media (max-width: 360px) {
+            .card { padding: 20px 12px 20px; background: rgba(255, 255, 255, 0.85); }
+            .place-card { min-height: 160px; padding: 16px 12px; }
+            .place-card .icon { font-size: 30px; }
+            .floating-emojis span { display: none; }
+            .text-left { font-size: 14px; }
+            .final-info { font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="floating-emojis">
+    <span>☀️</span><span>🌸</span><span>🌿</span><span>✨</span><span>🦙</span>
+    <span>🍃</span><span>🌺</span><span>🌻</span><span>🦋</span><span>🌈</span>
+    <span>🌷</span><span>🍀</span><span>🌊</span><span>🍉</span><span>🧚</span>
+    <span>🪷</span><span>🌻</span><span>🍄</span><span>🪴</span><span>🌞</span>
+</div>
+
+<div class="card" id="app">
+
+    <!-- ===== СТРАНИЦА 0: Привет ===== -->
+    <div class="screen active" id="screen0">
+        <div class="emoji-big">👋</div>
+        <h1>Юля, привет!</h1>
+        <div style="font-size: 18px; line-height: 1.6; color: #3d3530; padding: 0 4px; margin-top: 4px;">
+            Ты уже согласилась встретиться второй раз в воскресенье. Обратной дороги нет 😏<br><br>
+            Осталось только выбрать, куда я тебя украду.
+        </div>
+        <button class="btn btn-primary btn-large" onclick="goToScreen2()" style="margin-top: 10px;">
+            Далее
+        </button>
+    </div>
+
+    <!-- ===== СТРАНИЦА 2: Предисловие ===== -->
+    <div class="screen" id="screen2">
+        <h2 style="font-size: 28px;">Предисловие 🤔</h2>
+        <div class="text-left text-justify">
+            Обычно в такие моменты парень спрашивает: «Куда хочешь?»<br>
+            А девушка отвечает: «Не знаю, а ты?»<br><br>
+            Мы пойдём другим путём.<br>
+            Ты сама выберешь место, никаких «мне всё равно» и «решай сам». Только твой выбор 😉
+        </div>
+        <button class="btn btn-primary btn-large" onclick="goToScreenDate()" style="margin-top: 10px;">
+            К вариантам
+        </button>
+    </div>
+
+    <!-- ===== СТРАНИЦА ДАТЫ: Выбор времени ===== -->
+    <div class="screen" id="screenDate">
+        <div class="emoji-big">⏰</div>
+        <h2>Выбери удобное время</h2>
+        <p class="sub">Мы уже договорились пойти в воскресенье</p>
+        
+        <div style="width:100%; margin-top: 10px;">
+            <div class="date-picker-card" id="datePickerCard" onclick="openDatePicker()">
+                <div class="placeholder">
+                    <span class="icon">📅</span>
+                    Тыкни сюда
+                </div>
+                <div class="selected-date">
+                    <span class="emoji">📌</span>
+                    <span id="selectedDateDisplay">—</span>
+                    <span class="date-text" id="selectedTimeDisplay">—</span>
+                </div>
+                <input type="datetime-local" id="datePicker" oninput="updateSelectedDate()">
+            </div>
+            <button class="btn-confirm-date" id="confirmDateBtn" onclick="confirmDate()">Подтвердить ✅</button>
+        </div>
+    </div>
+
+    <!-- ===== СТРАНИЦА ВЫБОРА МЕСТА ===== -->
+    <div class="screen" id="screen3_old">
+        <h2 style="font-size: 24px;">Куда пойдём?</h2>
+        <p class="sub">Выбирай, что тебе в кайф :)</p>
+        <div class="carousel-wrapper">
+            <div class="carousel-track" id="carouselTrack"></div>
+        </div>
+        <div class="carousel-dots" id="carouselDots"></div>
+        <button class="btn-select-place" id="selectPlaceBtn" onclick="confirmPlace()">Сюдаааа! ✨</button>
+    </div>
+
+    <!-- ===== ФИНАЛ ===== -->
+    <div class="screen" id="screen4">
+        <div class="emoji-big">🎉</div>
+        <h2>Идея для нашего свидания подтверждена</h2>
+        <div class="final-info" id="finalInfo">
+            <!-- Заполняется через JS -->
+        </div>
+        <button class="btn btn-success" style="width:100%;" onclick="finishAndSave()">Завершить ✅</button>
+        <div class="divider"></div>
+        <button class="hidden-btn" id="adminBtn" onclick="showHistory()" style="display:none;">📊 Показать историю</button>
+        <button class="hidden-btn danger" id="clearBtn" onclick="clearHistory()" style="display:none;">🗑️ Очистить историю</button>
+    </div>
+
+</div>
+
+<script>
+    // ===== ДАННЫЕ =====
+    const places = [
+        { id: 'emet', icon: '🐶', name: 'Гулять с Эметом', desc: '', note: '' },
+        { id: 'thebyk', icon: '🌊', name: 'Гулять по набережной в центре', desc: '', note: 'а затем в TheБык (попытка №2 😄)' },
+        { id: 'alpaca', icon: '🦙', name: 'Альпака парк в Сокольниках', desc: '', note: 'а затем в сам парк' },
+        { id: 'bike', icon: '🚲', name: 'Кататься на великах', desc: '', note: 'у нас есть девчачий 💅' },
+        { id: 'bowling', icon: '🎳', name: 'В боулинг!', desc: '', note: 'но для этого лучше иметь компанию 🙃' },
+        { id: 'billiards', icon: '🎱', name: 'В бильярд!', desc: '', note: 'я не умею' },
+        { id: 'karting', icon: '🏎️', name: 'Картинг', desc: '', note: 'адреналинчик 🏁' }
+    ];
+
+    let currentSlide = 0;
+    let selectedPlace = null;
+    let currentAnswers = { step1: null, date: null, place: null };
+    let selectedDateValue = null;
+    let isFinished = false;
+    const STORAGE_KEY = 'inviteHistoryYulia';
+
+    // ⚠️ ВСТАВЬ СВОЙ URL
+    const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/ТВОЙ_УНИКАЛЬНЫЙ_ID/exec';
+
+    // ===== ОТПРАВКА В GOOGLE SHEETS =====
+    function sendToGoogleSheets(data) {
+        const params = new URLSearchParams();
+        params.append('event', data.event || '');
+        params.append('step1', data.step1 || '');
+        params.append('date', data.date || '');
+        params.append('place', data.place || '');
+        params.append('page', data.page || '');
+        params.append('final', data.final || '');
+        
+        fetch(GOOGLE_SHEETS_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: params.toString()
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('✅ Ответ от сервера:', data);
+        })
+        .catch((error) => {
+            console.error('❌ Ошибка отправки:', error);
+        });
+    }
+
+    // ===== ТРЕКИНГ СТРАНИЦ =====
+    function trackPage(page) {
+        sendToGoogleSheets({
+            event: 'Просмотр страницы',
+            page: page,
+            step1: '',
+            date: '',
+            place: '',
+            final: ''
+        });
+    }
+
+    // ===== ПОКАЗАТЬ ЭКРАН =====
+    function showScreen(id) {
+        document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        
+        const trackedPages = ['screen2', 'screenDate', 'screen3_old'];
+        if (trackedPages.includes(id)) {
+            trackPage(id);
+        }
+    }
+
+    // ===== ФУНКЦИИ ПЕРЕХОДОВ =====
+    function goToScreen2() {
+        showScreen('screen2');
+    }
+
+    function goToScreenDate() {
+        currentAnswers.step1 = 'yes';
+        showScreen('screenDate');
+        setupDatePicker();
+        isFinished = false;
+        
+        sendToGoogleSheets({
+            event: 'Согласие',
+            step1: 'yes',
+            date: '',
+            place: '',
+            page: 'screenDate',
+            final: ''
+        });
+    }
+
+    // ===== ДАТА-ПИКЕР =====
+    function setupDatePicker() {
+        const picker = document.getElementById('datePicker');
+        const now = new Date();
+        
+        // Находим ближайшее воскресенье
+        const sunday = new Date(now);
+        const daysUntilSunday = (7 - now.getDay()) % 7 || 7;
+        sunday.setDate(now.getDate() + daysUntilSunday);
+        sunday.setHours(0, 0, 0, 0);
+        
+        picker.min = sunday.toISOString().slice(0, 16);
+        picker.max = new Date(sunday.getTime() + 24 * 60 * 60 * 1000 - 1).toISOString().slice(0, 16);
+        picker.value = '';
+        selectedDateValue = null;
+        updateDateDisplay();
+        updateConfirmBtn();
+    }
+
+    function openDatePicker() {
+        const picker = document.getElementById('datePicker');
+        if (picker.showPicker) picker.showPicker();
+        else picker.click();
+    }
+
+    function updateSelectedDate() {
+        const picker = document.getElementById('datePicker');
+        const value = picker.value;
+        
+        if (!value) {
+            selectedDateValue = null;
+            updateDateDisplay();
+            updateConfirmBtn();
+            return;
+        }
+
+        const dt = new Date(value);
+        if (isNaN(dt.getTime())) {
+            selectedDateValue = null;
+            updateDateDisplay();
+            updateConfirmBtn();
+            return;
+        }
+
+        selectedDateValue = value;
+        updateDateDisplay();
+        updateConfirmBtn();
+    }
+
+    function updateDateDisplay() {
+        const card = document.getElementById('datePickerCard');
+        const display = document.getElementById('selectedDateDisplay');
+        const timeDisplay = document.getElementById('selectedTimeDisplay');
+
+        if (selectedDateValue) {
+            const dt = new Date(selectedDateValue);
+            const dateStr = dt.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', weekday: 'short' });
+            const timeStr = dt.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+            display.textContent = dateStr;
+            timeDisplay.textContent = timeStr;
+            card.classList.add('has-date');
+        } else {
+            display.textContent = '—';
+            timeDisplay.textContent = '—';
+            card.classList.remove('has-date');
+        }
+    }
+
+    function updateConfirmBtn() {
+        const btn = document.getElementById('confirmDateBtn');
+        if (selectedDateValue) {
+            btn.classList.add('active');
+            btn.disabled = false;
+        } else {
+            btn.classList.remove('active');
+            btn.disabled = true;
+        }
+    }
+
+    function confirmDate() {
+        if (!selectedDateValue) {
+            alert('Пожалуйста, выбери время 😊');
+            return;
+        }
+
+        const dt = new Date(selectedDateValue);
+        const hours = dt.getHours();
+
+        // Проверка: с 08:00 до 24:00
+        if (hours < 8) {
+            alert('⏰ Слишком рано! Выбери время после 08:00 😊');
+            document.getElementById('datePicker').value = '';
+            selectedDateValue = null;
+            updateDateDisplay();
+            updateConfirmBtn();
+            return;
+        }
+
+        if (hours >= 24 || hours < 0) {
+            alert('⏰ Слишком поздно! Выбери время до 24:00 😊');
+            document.getElementById('datePicker').value = '';
+            selectedDateValue = null;
+            updateDateDisplay();
+            updateConfirmBtn();
+            return;
+        }
+
+        currentAnswers.date = selectedDateValue;
+        
+        sendToGoogleSheets({
+            event: 'Выбор времени',
+            step1: '',
+            date: selectedDateValue,
+            place: '',
+            page: 'screenDate',
+            final: ''
+        });
+        
+        goPlace();
+    }
+
+    // ===== КАРУСЕЛЬ =====
+    function initCarousel() {
+        const track = document.getElementById('carouselTrack');
+        const dots = document.getElementById('carouselDots');
+        track.innerHTML = '';
+        dots.innerHTML = '';
+
+        places.forEach((place, index) => {
+            const slide = document.createElement('div');
+            slide.className = 'carousel-slide';
+            
+            let noteHtml = '';
+            if (place.note) {
+                noteHtml = `<div class="small-note">${place.note}</div>`;
+            }
+            
+            slide.innerHTML = `
+                <div class="place-card" data-index="${index}" onclick="selectPlaceFromCarousel(${index})">
+                    <div class="icon">${place.icon}</div>
+                    <div class="name">${place.name}</div>
+                    ${noteHtml}
+                </div>
+            `;
+            track.appendChild(slide);
+            const dot = document.createElement('div');
+            dot.className = 'dot' + (index === 0 ? ' active' : '');
+            dots.appendChild(dot);
+        });
+
+        updateSelectBtn();
+        updateDots();
+
+        let startX = 0;
+        let isDragging = false;
+        const wrapper = document.querySelector('.carousel-wrapper');
+
+        wrapper.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+            isDragging = true;
+        });
+        wrapper.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            const diff = startX - e.touches[0].clientX;
+            if (Math.abs(diff) > 30) {
+                if (diff > 0) nextSlide();
+                else prevSlide();
+                isDragging = false;
+            }
+        });
+        wrapper.addEventListener('touchend', () => { isDragging = false; });
+
+        let mouseDown = false;
+        let mouseStartX = 0;
+        wrapper.addEventListener('mousedown', (e) => {
+            mouseDown = true;
+            mouseStartX = e.clientX;
+        });
+        wrapper.addEventListener('mouseup', (e) => {
+            if (!mouseDown) return;
+            const diff = mouseStartX - e.clientX;
+            if (Math.abs(diff) > 30) {
+                if (diff > 0) nextSlide();
+                else prevSlide();
+            }
+            mouseDown = false;
+        });
+        wrapper.addEventListener('mouseleave', () => { mouseDown = false; });
+    }
+
+    function goToSlide(index) {
+        const track = document.getElementById('carouselTrack');
+        const total = places.length;
+        if (index < 0) index = total - 1;
+        if (index >= total) index = 0;
+        currentSlide = index;
+        track.style.transform = `translateX(-${index * 100}%)`;
+        updateDots();
+        document.querySelectorAll('.place-card').forEach((card, i) => {
+            card.classList.toggle('selected', i === index);
+        });
+        selectedPlace = places[index];
+        currentAnswers.place = selectedPlace.name;
+        updateSelectBtn();
+    }
+
+    function nextSlide() { goToSlide(currentSlide + 1); }
+    function prevSlide() { goToSlide(currentSlide - 1); }
+    function selectPlaceFromCarousel(index) { goToSlide(index); }
+
+    function updateDots() {
+        document.querySelectorAll('.dot').forEach((dot, i) => {
+            dot.classList.toggle('active', i === currentSlide);
+        });
+    }
+
+    function updateSelectBtn() {
+        const btn = document.getElementById('selectPlaceBtn');
+        if (selectedPlace) {
+            btn.classList.add('active');
+            btn.textContent = `Сюдаааа! ✨ → ${selectedPlace.icon} ${selectedPlace.name}`;
+        } else {
+            btn.classList.remove('active');
+            btn.textContent = 'Сюдаааа! ✨';
+        }
+    }
+
+    function confirmPlace() {
+        if (!selectedPlace) {
+            alert('Выбери место, которое тебе нравится 😊');
+            return;
+        }
+        currentAnswers.place = selectedPlace.name;
+        
+        sendToGoogleSheets({
+            event: 'Выбор места',
+            step1: '',
+            date: '',
+            place: selectedPlace.name,
+            page: 'screen3_old',
+            final: ''
+        });
+        
+        goFinal();
+    }
+
+    function goPlace() {
+        showScreen('screen3_old');
+        if (document.getElementById('carouselTrack').children.length === 0) {
+            initCarousel();
+        } else {
+            document.querySelectorAll('.place-card').forEach(c => c.classList.remove('selected'));
+            selectedPlace = null;
+            currentAnswers.place = null;
+            updateSelectBtn();
+            goToSlide(0);
+        }
+    }
+
+    // ===== ФИНАЛ =====
+    function goFinal() {
+        showScreen('screen4');
+        
+        let timeStr = '—';
+        if (currentAnswers.date) {
+            const d = new Date(currentAnswers.date);
+            timeStr = d.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+        }
+        
+        const finalInfo = document.getElementById('finalInfo');
+        finalInfo.innerHTML = `
+            <div><span class="label">Место:</span> я за тобой заеду 🚗</div>
+            <div><span class="label">Дата:</span> воскресенье, 13 сентября, ${timeStr} 📅</div>
+            <div><span class="label">Дресс-код:</span> стилёвый 😎</div>
+            <div><span class="label">Сопровождающий:</span> я 😏</div>
+        `;
+        
+        checkAdmin();
+    }
+
+    // ===== ФИНАЛЬНОЕ СОХРАНЕНИЕ =====
+    function finishAndSave() {
+        if (isFinished) {
+            alert('Ты уже завершила опрос 😊');
+            return;
+        }
+        
+        const dataToSend = {
+            event: 'Завершение опроса',
+            step1: currentAnswers.step1 || 'yes',
+            date: currentAnswers.date || '',
+            place: currentAnswers.place || '',
+            page: 'final',
+            final: '🎉 ЗАВЕРШЕНО'
+        };
+        
+        sendToGoogleSheets(dataToSend);
+        saveHistory({
+            step1: currentAnswers.step1,
+            date: currentAnswers.date,
+            place: currentAnswers.place
+        });
+        
+        isFinished = true;
+        
+        alert('🎉 Готово! Твой выбор сохранён. Я напишу тебе ближе к дате. Договорились? 😊');
+        
+        const finishBtn = document.querySelector('.btn-success');
+        finishBtn.textContent = '✅ Уже завершено';
+        finishBtn.style.background = '#d4c9c4';
+        finishBtn.style.cursor = 'default';
+        finishBtn.onclick = null;
+    }
+
+    // ===== ИСТОРИЯ =====
+    function getHistory() {
+        try {
+            return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+        } catch { return []; }
+    }
+
+    function saveHistory(entry) {
+        const history = getHistory();
+        history.push({ timestamp: new Date().toISOString(), ...entry });
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+    }
+
+    function clearHistory() {
+        if (confirm('🗑️ Точно очистить всю историю ответов?')) {
+            localStorage.removeItem(STORAGE_KEY);
+            alert('✅ История очищена');
+        }
+    }
+
+    function checkAdmin() {
+        if (window.location.search.includes('admin')) {
+            document.getElementById('adminBtn').style.display = 'block';
+            document.getElementById('clearBtn').style.display = 'block';
+        }
+    }
+
+    function showHistory() {
+        const history = getHistory();
+        if (history.length === 0) {
+            alert('📭 Локальная история пуста');
+            return;
+        }
+
+        let msg = '📊 ЛОКАЛЬНАЯ ИСТОРИЯ ОТВЕТОВ\n';
+        msg += `Всего попыток: ${history.length}\n`;
+        msg += '═'.repeat(30) + '\n\n';
+
+        history.forEach((entry, index) => {
+            const date = new Date(entry.timestamp);
+            const dateStr = date.toLocaleString('ru-RU', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
+            msg += `#${index + 1} (${dateStr})\n`;
+            msg += `  Согласие: ${entry.step1 === 'yes' ? '✅ ДА' : '❌ НЕТ'}\n`;
+            if (entry.date) {
+                const d = new Date(entry.date);
+                msg += `  Дата: ${d.toLocaleString('ru-RU')}\n`;
+            }
+            if (entry.place) msg += `  Место: ${entry.place}\n`;
+            msg += '\n';
+        });
+
+        alert(msg + '\n\n📌 ВСЕ ОТВЕТЫ СМОТРИ В GOOGLE ТАБЛИЦЕ!');
+    }
+
+    window.onload = function() {
+        showScreen('screen0');
+        checkAdmin();
+        updateConfirmBtn();
+    };
+</script>
+
+</body>
+</html>
