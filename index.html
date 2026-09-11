@@ -361,6 +361,17 @@
         </button>
     </div>
 
+    <!-- ===== СТРАНИЦА ВЫБОРА МЕСТА ===== -->
+    <div class="screen" id="screen3_old">
+        <h2>Куда пойдём?</h2>
+        <p class="sub">Выбирай, что тебе в кайф :)</p>
+        <div class="carousel-wrapper">
+            <div class="carousel-track" id="carouselTrack"></div>
+        </div>
+        <div class="carousel-dots" id="carouselDots"></div>
+        <button class="btn-select-place" id="selectPlaceBtn" onclick="confirmPlace()">Сюдаааа! ✨</button>
+    </div>
+    
     <!-- ===== СТРАНИЦА ДАТЫ: Выбор времени ===== -->
     <div class="screen" id="screenDate">
         <div class="emoji-big">⏰</div>
@@ -382,17 +393,6 @@
             </div>
             <button class="btn-confirm-date" id="confirmDateBtn" onclick="confirmDate()">Подтвердить ✅</button>
         </div>
-    </div>
-
-    <!-- ===== СТРАНИЦА ВЫБОРА МЕСТА ===== -->
-    <div class="screen" id="screen3_old">
-        <h2>Куда пойдём?</h2>
-        <p class="sub">Выбирай, что тебе в кайф :)</p>
-        <div class="carousel-wrapper">
-            <div class="carousel-track" id="carouselTrack"></div>
-        </div>
-        <div class="carousel-dots" id="carouselDots"></div>
-        <button class="btn-select-place" id="selectPlaceBtn" onclick="confirmPlace()">Сюдаааа! ✨</button>
     </div>
 
     <!-- ===== ФИНАЛ ===== -->
@@ -537,16 +537,26 @@
 
     function goToScreenDate() {
         currentAnswers.step1 = 'yes';
-        showScreen('screenDate');
-        setupDatePicker();
+        showScreen('screen3_old');
         isFinished = false;
+        
+        // Инициализируем карусель
+        if (document.getElementById('carouselTrack').children.length === 0) {
+            initCarousel();
+        } else {
+            document.querySelectorAll('.place-card').forEach(c => c.classList.remove('selected'));
+            selectedPlace = null;
+            currentAnswers.place = null;
+            updateSelectBtn();
+            goToSlide(0);
+        }
         
         sendToGoogleSheets({
             event: 'Согласие',
             step1: 'yes',
             date: '',
             place: '',
-            page: 'screenDate',
+            page: 'screen3_old',
             final: ''
         });
     }
@@ -651,7 +661,8 @@
             final: ''
         });
         
-        goPlace();
+        // Переходим на финал
+        goFinal();
     }
 
     // ===== КАРУСЕЛЬ =====
@@ -776,21 +787,15 @@
             final: ''
         });
         
-        goFinal();
+        // Переходим на выбор времени
+        goToTime();
     }
 
-    function goPlace() {
-        showScreen('screen3_old');
-        if (document.getElementById('carouselTrack').children.length === 0) {
-            initCarousel();
-        } else {
-            document.querySelectorAll('.place-card').forEach(c => c.classList.remove('selected'));
-            selectedPlace = null;
-            currentAnswers.place = null;
-            updateSelectBtn();
-            goToSlide(0);
-        }
+    function goToTime() {
+        showScreen('screenDate');
+        setupDatePicker();
     }
+
 
     // ===== ФИНАЛ =====
     function goFinal() {
