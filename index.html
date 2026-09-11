@@ -302,7 +302,7 @@
 
     <!-- ===== СТРАНИЦА 0: Привет ===== -->
     <div class="screen active" id="screen0">
-        <img src="1.gif" alt="Привет" style="width: 180px; height: auto; border-radius: 16px; display: block; margin: 0 auto 10px;">
+        <img src="1.gif" style="width: 140px; height: auto; display: block; margin-left: 10px;">
         <h1>Юля, привет!</h1>
         <div style="font-size: 18px; line-height: 1.6; color: #3d3530; padding: 0 4px; margin-top: 4px;">
             Ты уже согласилась встретиться второй раз в воскресенье. Обратной дороги нет ✨<br><br>
@@ -317,7 +317,7 @@
     <div class="screen" id="screen2">
         <img src="2.gif" alt="Предисловие" style="width: 180px; height: auto; border-radius: 16px; display: block; margin: 0 auto 10px;">
         <h2 style="font-size: 28px;">Предисловие</h2>
-        <div style="font-size: 18px; line-height: 1.6; color: #3d3530; padding: 0 4px; text-align: center;">
+        <div style="font-size: 18px; line-height: 1.6; color: #3d3530; padding: 0 4px; text-align: justify; width: 100%;">
             Обычно в такие моменты парень спрашивает: «Куда хочешь?»<br>
             А девушка отвечает: «Не знаю, а ты?»<br><br>
             Мы пойдём другим путём.<br>
@@ -380,7 +380,7 @@
 <script>
     // ===== ДАННЫЕ =====
     const places = [
-        { id: 'emet', icon: '🐶', name: 'Гулять с Эметом', desc: 'У тебя классный пёс', note: '' },
+        { id: 'emet', icon: '🐶', name: 'Гулять с Эметом', desc: '', note: 'У тебя классный пёс' },
         { id: 'thebyk', icon: '🌊', name: 'Гулять по набережной в центре', desc: '', note: 'а затем в TheБык (попытка №2 😄)' },
         { id: 'alpaca', icon: '🦙', name: 'Альпака парк в Сокольниках', desc: '', note: 'а затем в сам парк' },
         { id: 'bike', icon: '🚲', name: 'Кататься на великах', desc: '', note: 'у нас есть девчачий 💅' },
@@ -538,9 +538,9 @@
         const parts = selectedDateValue.split(':');
         const hours = parseInt(parts[0], 10);
 
-        // Проверка: с 08:00 до 24:00
-        if (hours < 8) {
-            alert('⏰ Слишком рано! Выбери время после 08:00 😊');
+        // Проверка: с 04:00 до 00:00 (то есть с 04:00 до 23:59)
+        if (hours >= 0 && hours < 4) {
+            alert('⏰ Слишком поздно! Выбери время после 04:00 😊');
             document.getElementById('datePicker').value = '';
             selectedDateValue = null;
             updateDateDisplay();
@@ -548,6 +548,16 @@
             return;
         }
 
+        if (hours >= 4 && hours < 9) {
+            alert('⏰ Слишком рано! Выбери время после 09:00 😊');
+            document.getElementById('datePicker').value = '';
+            selectedDateValue = null;
+            updateDateDisplay();
+            updateConfirmBtn();
+            return;
+        }
+
+        // Всё остальное (с 09:00 до 23:59) — разрешено
         currentAnswers.date = selectedDateValue;
         
         sendToGoogleSheets({
