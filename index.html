@@ -302,10 +302,10 @@
 
     <!-- ===== СТРАНИЦА 0: Привет ===== -->
     <div class="screen active" id="screen0">
-        <div class="emoji-big">👋</div>
+        <img src="1.gif" alt="Привет" style="width: 180px; height: auto; border-radius: 16px; display: block; margin: 0 auto 10px;">
         <h1>Юля, привет!</h1>
         <div style="font-size: 18px; line-height: 1.6; color: #3d3530; padding: 0 4px; margin-top: 4px;">
-            Ты уже согласилась встретиться второй раз в воскресенье. Обратной дороги нет 😏<br><br>
+            Ты уже согласилась встретиться второй раз в воскресенье. Обратной дороги нет ✨<br><br>
             Осталось только выбрать, куда я тебя украду.
         </div>
         <button class="btn btn-primary btn-large" onclick="goToScreen2()" style="margin-top: 10px;">
@@ -315,8 +315,9 @@
 
     <!-- ===== СТРАНИЦА 2: Предисловие ===== -->
     <div class="screen" id="screen2">
-        <h2 style="font-size: 28px;">Предисловие 🤔</h2>
-        <div class="text-left text-justify">
+        <img src="2.gif" alt="Предисловие" style="width: 180px; height: auto; border-radius: 16px; display: block; margin: 0 auto 10px;">
+        <h2 style="font-size: 28px;">Предисловие</h2>
+        <div style="font-size: 18px; line-height: 1.6; color: #3d3530; padding: 0 4px; text-align: center;">
             Обычно в такие моменты парень спрашивает: «Куда хочешь?»<br>
             А девушка отвечает: «Не знаю, а ты?»<br><br>
             Мы пойдём другим путём.<br>
@@ -334,9 +335,9 @@
         <p class="sub">Мы уже договорились пойти в воскресенье</p>
         
         <div style="width:100%; margin-top: 10px;">
-            <div class="date-picker-card" id="datePickerCard" onclick="openDatePicker()">
+            <div class="date-picker-card" id="datePickerCard" onclick="openTimePicker()">
                 <div class="placeholder">
-                    <span class="icon">📅</span>
+                    <span class="icon">🕐</span>
                     Тыкни сюда
                 </div>
                 <div class="selected-date">
@@ -344,7 +345,7 @@
                     <span id="selectedDateDisplay">—</span>
                     <span class="date-text" id="selectedTimeDisplay">—</span>
                 </div>
-                <input type="datetime-local" id="datePicker" oninput="updateSelectedDate()">
+                <input type="time" id="datePicker" oninput="updateSelectedDate()">
             </div>
             <button class="btn-confirm-date" id="confirmDateBtn" onclick="confirmDate()">Подтвердить ✅</button>
         </div>
@@ -363,7 +364,7 @@
 
     <!-- ===== ФИНАЛ ===== -->
     <div class="screen" id="screen4">
-        <div class="emoji-big">🎉</div>
+        <img src="3.gif" alt="Готово" style="width: 180px; height: auto; border-radius: 16px; display: block; margin: 0 auto 10px;">
         <h2>Идея для нашего свидания подтверждена</h2>
         <div class="final-info" id="finalInfo">
             <!-- Заполняется через JS -->
@@ -379,7 +380,7 @@
 <script>
     // ===== ДАННЫЕ =====
     const places = [
-        { id: 'emet', icon: '🐶', name: 'Гулять с Эметом', desc: '', note: '' },
+        { id: 'emet', icon: '🐶', name: 'Гулять с Эметом', desc: 'У тебя классный пёс', note: '' },
         { id: 'thebyk', icon: '🌊', name: 'Гулять по набережной в центре', desc: '', note: 'а затем в TheБык (попытка №2 😄)' },
         { id: 'alpaca', icon: '🦙', name: 'Альпака парк в Сокольниках', desc: '', note: 'а затем в сам парк' },
         { id: 'bike', icon: '🚲', name: 'Кататься на великах', desc: '', note: 'у нас есть девчачий 💅' },
@@ -471,23 +472,13 @@
     // ===== ДАТА-ПИКЕР =====
     function setupDatePicker() {
         const picker = document.getElementById('datePicker');
-        const now = new Date();
-        
-        // Находим ближайшее воскресенье
-        const sunday = new Date(now);
-        const daysUntilSunday = (7 - now.getDay()) % 7 || 7;
-        sunday.setDate(now.getDate() + daysUntilSunday);
-        sunday.setHours(0, 0, 0, 0);
-        
-        picker.min = sunday.toISOString().slice(0, 16);
-        picker.max = new Date(sunday.getTime() + 24 * 60 * 60 * 1000 - 1).toISOString().slice(0, 16);
         picker.value = '';
         selectedDateValue = null;
         updateDateDisplay();
         updateConfirmBtn();
     }
 
-    function openDatePicker() {
+    function openTimePicker() {
         const picker = document.getElementById('datePicker');
         if (picker.showPicker) picker.showPicker();
         else picker.click();
@@ -504,14 +495,7 @@
             return;
         }
 
-        const dt = new Date(value);
-        if (isNaN(dt.getTime())) {
-            selectedDateValue = null;
-            updateDateDisplay();
-            updateConfirmBtn();
-            return;
-        }
-
+        // Просто сохраняем время
         selectedDateValue = value;
         updateDateDisplay();
         updateConfirmBtn();
@@ -523,11 +507,9 @@
         const timeDisplay = document.getElementById('selectedTimeDisplay');
 
         if (selectedDateValue) {
-            const dt = new Date(selectedDateValue);
-            const dateStr = dt.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', weekday: 'short' });
-            const timeStr = dt.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
-            display.textContent = dateStr;
-            timeDisplay.textContent = timeStr;
+            // selectedDateValue = "HH:MM"
+            display.textContent = 'Воскресенье';
+            timeDisplay.textContent = selectedDateValue;
             card.classList.add('has-date');
         } else {
             display.textContent = '—';
@@ -553,21 +535,12 @@
             return;
         }
 
-        const dt = new Date(selectedDateValue);
-        const hours = dt.getHours();
+        const parts = selectedDateValue.split(':');
+        const hours = parseInt(parts[0], 10);
 
         // Проверка: с 08:00 до 24:00
         if (hours < 8) {
             alert('⏰ Слишком рано! Выбери время после 08:00 😊');
-            document.getElementById('datePicker').value = '';
-            selectedDateValue = null;
-            updateDateDisplay();
-            updateConfirmBtn();
-            return;
-        }
-
-        if (hours >= 24 || hours < 0) {
-            alert('⏰ Слишком поздно! Выбери время до 24:00 😊');
             document.getElementById('datePicker').value = '';
             selectedDateValue = null;
             updateDateDisplay();
@@ -733,8 +706,7 @@
         
         let timeStr = '—';
         if (currentAnswers.date) {
-            const d = new Date(currentAnswers.date);
-            timeStr = d.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+            timeStr = currentAnswers.date;
         }
         
         const finalInfo = document.getElementById('finalInfo');
@@ -773,7 +745,7 @@
         
         isFinished = true;
         
-        alert('🎉 Готово! Твой выбор сохранён. Я напишу тебе ближе к дате. Договорились? 😊');
+        alert('🎉 Готово! Твой выбор сохранён. Я тебе напишу! 😊');
         
         const finishBtn = document.querySelector('.btn-success');
         finishBtn.textContent = '✅ Уже завершено';
