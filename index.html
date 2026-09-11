@@ -120,7 +120,7 @@
         .btn:active { transform: scale(0.95); }
                 /* ===== АНИМАЦИЯ ВЗРЫВА КНОПКИ ===== */
         .btn-explode {
-            animation: explode 0.5s ease-out forwards;
+            animation: explode 1s ease-out forwards;
             pointer-events: none;
         }
 
@@ -136,7 +136,7 @@
             font-size: 24px;
             pointer-events: none;
             z-index: 9999;
-            animation: heartFly 1.5s ease-out forwards;
+            animation: heartFly 5s ease-out forwards;
         }
 
         @keyframes heartFly {
@@ -496,14 +496,14 @@
         const hearts = ['❤️', '💖', '💕', '💗', '💓', '💞', '💘', '💝', '💙', '💚', '💛', '🧡', '💜', '🤍'];
 
         // Создаём 15 сердечек
-        for (let i = 0; i < 15; i++) {
+        for (let i = 0; i < 55; i++) {
             const heart = document.createElement('div');
             heart.className = 'heart-particle';
             heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
 
             // Случайный угол и расстояние разлёта
             const angle = (Math.PI * 2 * i) / 15 + (Math.random() - 0.5) * 0.5;
-            const distance = 100 + Math.random() * 150;
+            const distance = 100 + Math.random() * 500;
             const tx = Math.cos(angle) * distance;
             const ty = Math.sin(angle) * distance;
             const rot = (Math.random() - 0.5) * 720;
@@ -517,20 +517,20 @@
 
             document.body.appendChild(heart);
 
-            // Удаляем сердечко через 1.5 секунды
-            setTimeout(() => heart.remove(), 1500);
+            // Удаляем сердечко через 4 секунды
+            setTimeout(() => heart.remove(), 4001);
         }
 
         // Анимация взрыва кнопки
         btn.classList.add('btn-explode');
 
-        // Переход на следующую страницу через 400мс
+        // Переход на следующую страницу через 2000мс
         setTimeout(() => {
             showScreen(nextScreen);
             // Возвращаем кнопку в исходное состояние
             btn.classList.remove('btn-explode');
             btn.style.opacity = '';
-        }, 400);
+        }, 2000);
     }
 
     function goToScreenDate() {
